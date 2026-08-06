@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  GENERATED-STUBS MODULE.
+  In real BCBSM services this holds code generated from the OpenAPI spec (the *Api
+  interfaces and DTOs). The application module depends on it. The harness WRITE-
+  EXCLUDES this module so the agent never hand-edits generated code.
+
+  For this sample it is kept minimal: it carries the OpenAPI spec and (in a real
+  setup) would run the openapi-generator plugin. To keep the sample buildable
+  without the generator, the *Api interface is provided as plain source here.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>sample-book-service</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>sample-book-service-openapi-code</artifactId>
+    <name>sample-book-service-openapi-code (generated)</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+    </dependencies>
+</project>

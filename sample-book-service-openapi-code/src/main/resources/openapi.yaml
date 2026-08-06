@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Sample Book Service API
+  version: 1.0.0
+paths:
+  /books/{bookId}:
+    get:
+      operationId: getBookById
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: A book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponse'
+components:
+  schemas:
+    BookResponse:
+      type: object
+      properties:
+        bookId: { type: string }
+        title:  { type: string }
+        author: { type: string }

@@ -1,0 +1,23 @@
+# Per-repo harness config. Module paths auto-detect from pom.xml (no name hardcoded).
+target_module: ""                       # blank => auto-detect the -application module
+
+test_command: "./mvnw test"             # unit tests only (team DoD)
+min_coverage: 0.90                       # 90% line coverage on the changed class
+coverage_scope: "changed"
+coverage_metric: "LINE"
+coverage_csv: "target/site/jacoco/jacoco.csv"
+coverage_command: "./mvnw jacoco:report"
+coverage_loopback_phase: "unit_testing"
+max_coverage_retries: 2
+
+write_exclude:                           # deny-wins; the -openapi-code module is
+  - "**/generated/**"                    # auto-excluded too
+  - "**/*MapperImpl.java"
+
+repo_stacks: ["backend"]
+
+model: "gpt-5-mini"
+phase_models: {}
+review_model: "claude-haiku-4.5"
+review_loopback_phase: "coding"
+max_review_retries: 2
