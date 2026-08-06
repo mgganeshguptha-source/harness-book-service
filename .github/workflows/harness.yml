@@ -15,7 +15,7 @@ on:
 
 jobs:
   harness:
-    uses: mgganeshguptha-source/harness-engine/.github/workflows/harness.yml@main
+    uses: mgganeshguptha-source/harness-engine/.github/workflows/harness.yml@v1
     with:
       feature_id: ${{ inputs.feature_id }}
       java-version: "17"
