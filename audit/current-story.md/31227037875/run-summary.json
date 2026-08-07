@@ -1,0 +1,217 @@
+{
+  "feature": "current-story.md",
+  "run_id": "31227037875",
+  "status": "halted",
+  "completed_phases": [
+    "context",
+    "prompt_steps",
+    "coding",
+    "code_review"
+  ],
+  "total_tokens": {
+    "input": 4801446,
+    "output": 61143,
+    "cache_read": 4368317,
+    "cache_write": 135874,
+    "reasoning": 22735
+  },
+  "phase_token_log": [
+    {
+      "phase": "context",
+      "model": "gpt-5-mini",
+      "phase_tokens": 114872,
+      "cumulative_tokens": 114872,
+      "input_tokens": 112436,
+      "output_tokens": 2436,
+      "cached_tokens": 74752,
+      "cache_write_tokens": 0,
+      "est_credits": 1.61618,
+      "est_usd": 0.0161618,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "skill",
+        "create"
+      ]
+    },
+    {
+      "phase": "prompt_steps",
+      "model": "gpt-5-mini",
+      "phase_tokens": 76493,
+      "cumulative_tokens": 191365,
+      "input_tokens": 70430,
+      "output_tokens": 6063,
+      "cached_tokens": 47616,
+      "cache_write_tokens": 0,
+      "est_credits": 1.9019900000000003,
+      "est_usd": 0.019019900000000003,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "create"
+      ]
+    },
+    {
+      "phase": "coding",
+      "model": "gpt-5-mini",
+      "phase_tokens": 810712,
+      "cumulative_tokens": 1002077,
+      "input_tokens": 799614,
+      "output_tokens": 11098,
+      "cached_tokens": 701824,
+      "cache_write_tokens": 0,
+      "est_credits": 6.4189099999999994,
+      "est_usd": 0.0641891,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "grep",
+        "view",
+        "edit",
+        "bash",
+        "create"
+      ]
+    },
+    {
+      "phase": "code_review",
+      "model": "claude-haiku-4.5",
+      "phase_tokens": 335329,
+      "cumulative_tokens": 1337406,
+      "input_tokens": 330273,
+      "output_tokens": 5056,
+      "cached_tokens": 288792,
+      "cache_write_tokens": 41098,
+      "est_credits": 9.56402,
+      "est_usd": 0.0956402,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "view",
+        "bash",
+        "create"
+      ]
+    },
+    {
+      "phase": "coding",
+      "model": "gpt-5-mini",
+      "phase_tokens": 396065,
+      "cumulative_tokens": 1733471,
+      "input_tokens": 390484,
+      "output_tokens": 5581,
+      "cached_tokens": 330112,
+      "cache_write_tokens": 0,
+      "est_credits": 3.4507800000000004,
+      "est_usd": 0.034507800000000005,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "grep",
+        "bash",
+        "glob",
+        "view",
+        "edit"
+      ]
+    },
+    {
+      "phase": "code_review",
+      "model": "claude-haiku-4.5",
+      "phase_tokens": 639436,
+      "cumulative_tokens": 2372907,
+      "input_tokens": 629427,
+      "output_tokens": 10009,
+      "cached_tokens": 585220,
+      "cache_write_tokens": 44006,
+      "est_credits": 15.277399999999998,
+      "est_usd": 0.152774,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "view",
+        "bash",
+        "glob",
+        "create",
+        "edit"
+      ]
+    },
+    {
+      "phase": "coding",
+      "model": "gpt-5-mini",
+      "phase_tokens": 974746,
+      "cumulative_tokens": 3347653,
+      "input_tokens": 967671,
+      "output_tokens": 7075,
+      "cached_tokens": 890368,
+      "cache_write_tokens": 0,
+      "est_credits": 5.573494999999999,
+      "est_usd": 0.05573495,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "view",
+        "bash",
+        "glob",
+        "grep",
+        "edit"
+      ]
+    },
+    {
+      "phase": "code_review",
+      "model": "claude-haiku-4.5",
+      "phase_tokens": 1514936,
+      "cumulative_tokens": 4862589,
+      "input_tokens": 1501111,
+      "output_tokens": 13825,
+      "cached_tokens": 1449633,
+      "cache_write_tokens": 50770,
+      "est_credits": 26.556630000000002,
+      "est_usd": 0.26556630000000003,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "view",
+        "bash",
+        "glob",
+        "create",
+        "edit"
+      ]
+    }
+  ],
+  "cost_estimate_disclaimer": {
+    "is_estimate": true,
+    "basis": "per-token pricing from GitHub's published usage-based rates; 1 AI credit = $0.01. No model is free under usage-based billing (incl. gpt-5-mini).",
+    "calibration": "measured against GitHub Billing on 2 runs: 14.5/16 (91%) and 25.3/27 (94%) \u2014 tends to run slightly UNDER actual",
+    "known_divergences": [
+      "cache-write tokens are counted but NOT priced \u2014 pricing them was measured to overshoot actual billing badly (136%)",
+      "token classes the SDK may report differently from how GitHub bills",
+      "published rates may have changed since this config was updated",
+      "phases whose model has no configured rate are excluded from totals"
+    ],
+    "direction": "approximate LOWER BOUND (~90-95% of actual)",
+    "authoritative_source": "GitHub Billing \u2014 AI-credit balance delta before/after the run (github.com/settings/copilot/features)",
+    "rates_reference": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+  }
+}
