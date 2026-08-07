@@ -1,0 +1,53 @@
+{
+  "feature": "current-story.md",
+  "run_id": "31183852950",
+  "status": "needs_input",
+  "completed_phases": [
+    "context"
+  ],
+  "total_tokens": {
+    "input": 152585,
+    "output": 3926,
+    "cache_read": 77696,
+    "cache_write": 0,
+    "reasoning": 2496
+  },
+  "phase_token_log": [
+    {
+      "phase": "context",
+      "model": "gpt-5-mini",
+      "phase_tokens": 156511,
+      "cumulative_tokens": 156511,
+      "input_tokens": 152585,
+      "output_tokens": 3926,
+      "cached_tokens": 77696,
+      "cache_write_tokens": 0,
+      "est_credits": 2.851665,
+      "est_usd": 0.02851665,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "skill",
+        "view",
+        "create"
+      ]
+    }
+  ],
+  "cost_estimate_disclaimer": {
+    "is_estimate": true,
+    "basis": "per-token pricing from GitHub's published usage-based rates; 1 AI credit = $0.01. No model is free under usage-based billing (incl. gpt-5-mini).",
+    "calibration": "measured against GitHub Billing on 2 runs: 14.5/16 (91%) and 25.3/27 (94%) \u2014 tends to run slightly UNDER actual",
+    "known_divergences": [
+      "cache-write tokens are counted but NOT priced \u2014 pricing them was measured to overshoot actual billing badly (136%)",
+      "token classes the SDK may report differently from how GitHub bills",
+      "published rates may have changed since this config was updated",
+      "phases whose model has no configured rate are excluded from totals"
+    ],
+    "direction": "approximate LOWER BOUND (~90-95% of actual)",
+    "authoritative_source": "GitHub Billing \u2014 AI-credit balance delta before/after the run (github.com/settings/copilot/features)",
+    "rates_reference": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+  }
+}
