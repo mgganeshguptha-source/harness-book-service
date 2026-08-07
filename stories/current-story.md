@@ -29,6 +29,8 @@ no blocking calls.
 8. **Coverage:** target ≥ 90% line coverage on the changed class (matches the harness gate).
 9. **Timeouts / retries / rate limiting:** none in this story — infrastructure owns
    resilience. Do not add timeout, retry, circuit-breaker, or rate-limit code.
+10. **Author validation:** max length 256 characters. Blank or >256 → 400 Bad Request.
+   No character restrictions beyond length (accept any UTF-8).
 
 ## Acceptance criteria
 - AC1: `GET /books/by-author/{author}` exists and returns `Mono<ResponseEntity<BookResponse>>`.
@@ -36,7 +38,7 @@ no blocking calls.
 - AC3: Lookup goes through `CatalogClient.fetchBookByAuthor(...)`; no direct downstream HTTP calls.
 - AC4: Reactive patterns followed (returns `Mono`, composes Reactor types); complies with
   the reactive-controller and reactive-webclient instructions.
-- AC5: Empty catalog result → 404; blank author → 400.
+- AC5: Empty catalog result → 404; blank author → 400; author > 256 chars → 400.
 - AC6: Unit test with `StepVerifier` covers the happy path and asserts the response body;
   changed class has ≥ 90% line coverage.
 - AC7: OpenAPI spec updated to add the operation; generated code is not hand-edited
