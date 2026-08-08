@@ -29,4 +29,18 @@ public class BookController implements BooksApi {
         return bookService.getBook(bookId)
                 .map(ResponseEntity::ok);
     }
+
+    @Override
+    public Mono<ResponseEntity<BookResponse>> getBookByAuthor(String author) {
+        log.info("Request received getBookByAuthor author:{}", author);
+        if (author == null || author.trim().isEmpty()) {
+            return Mono.just(ResponseEntity.badRequest().build());
+        }
+        if (author.length() > 256) {
+            return Mono.just(ResponseEntity.badRequest().build());
+        }
+        return bookService.getBookByAuthor(author)
+                .map(ResponseEntity::ok)
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+    }
 }
