@@ -16,4 +16,7 @@ public interface BooksApi {
 
     @GetMapping("/books/{bookId}")
     Mono<ResponseEntity<BookResponse>> getBookById(@PathVariable("bookId") String bookId);
+
+    @GetMapping("/books/by-author/{author}")
+    Mono<ResponseEntity<BookResponse>> getBookByAuthor(@PathVariable("author") String author);
 }
