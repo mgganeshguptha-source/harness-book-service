@@ -1,0 +1,7 @@
+command: ./mvnw test -Dtest=OwnerTest
+exit_code: 127
+summary: exit 127
+
+--- tail ---
+
+/bin/sh: 1: ./mvnw: not found
