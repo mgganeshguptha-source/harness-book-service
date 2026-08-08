@@ -23,4 +23,10 @@ public class BookServiceImpl implements BookService {
         return catalogClient.fetchBook(bookId)
                 .map(dto -> new BookResponse(dto.getBookId(), dto.getTitle(), dto.getAuthor()));
     }
+
+    @Override
+    public Mono<BookResponse> getBookByAuthor(String author) {
+        return catalogClient.fetchBookByAuthor(author)
+                .map(dto -> new BookResponse(dto.getBookId(), dto.getTitle(), dto.getAuthor()));
+    }
 }

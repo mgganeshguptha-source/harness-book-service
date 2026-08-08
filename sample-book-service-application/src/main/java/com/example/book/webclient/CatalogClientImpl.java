@@ -35,4 +35,13 @@ public class CatalogClientImpl implements CatalogClient {
                 .retrieve()
                 .bodyToMono(CatalogBookDto.class);
     }
+
+    @Override
+    public Mono<CatalogBookDto> fetchBookByAuthor(String author) {
+        log.info("Calling catalog common-layer for author:{}", author);
+        return webClient.get()
+                .uri("/catalog/books/by-author/{author}", author)
+                .retrieve()
+                .bodyToMono(CatalogBookDto.class);
+    }
 }
