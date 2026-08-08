@@ -1,0 +1,240 @@
+{
+  "feature_id": "current-story.md",
+  "story": "# Story BOOK-1: Add \"get book by author\" endpoint\n\n## Goal\nAdd a reactive endpoint that returns a single book for a given author name,\nfollowing the existing reactive `getBookById` pattern and delegating to the\ncatalog common-layer client (`CatalogClient`). Reactive only (WebFlux/Reactor);\nno blocking calls.\n\n## Expected behaviour\n- New endpoint: `GET /books/by-author/{author}`\n- Returns: `Mono<ResponseEntity<BookResponse>>`\n- The controller delegates to `BookService`, which calls `CatalogClient` for the\n  lookup. No `.block()` and no `.collectList()` anywhere.\n\n## Explicit behaviour decisions (resolving prior clarifications)\n1. **Match rule:** exact, case-insensitive match on the author name. No partial/contains matching.\n2. **Multiple matches:** the catalog client is expected to return at most one book\n   for an exact author match in this sample. If more than one is returned, use the\n   **first** result. Do not add 409/aggregation logic.\n3. **Path encoding:** the `{author}` value arrives already URL-decoded by the framework.\n   Accept it as-is (spaces, UTF-8 allowed). No custom decoding.\n4. **CatalogClient method:** add a new method to `CatalogClient` named\n   `fetchBookByAuthor(String author)` returning `Mono<CatalogBookDto>`, mirroring the\n   existing `fetchBook(String bookId)` method. Implement it in `CatalogClientImpl`\n   calling the catalog endpoint `/catalog/books/by-author/{author}`.\n5. **Authentication:** public endpoint for this sample \u2014 no roles/scopes required.\n6. **No match:** return **404 Not Found** when the catalog client returns empty.\n7. **Empty/blank author:** return **400 Bad Request**.\n8. **Coverage:** target \u2265 90% line coverage on the changed class (matches the harness gate).\n9. **Timeouts / retries / rate limiting:** none in this story \u2014 infrastructure owns\n   resilience. Do not add timeout, retry, circuit-breaker, or rate-limit code.\n10. **Author validation:** max length 256 characters. Blank or >256 \u2192 400 Bad Request.\n   No character restrictions beyond length (accept any UTF-8).\n11. **API interface method:** the `getBookByAuthor` operation is already declared on the\n   generated `BooksApi` interface. Implement that interface method in the controller \u2014\n   do NOT add `@GetMapping`/`@RequestMapping` in the controller, and do NOT edit the\n   generated `*-openapi-code` module or any OpenAPI spec (it is owned/generated elsewhere\n   and is out of scope for this story).\n\n## Phase ownership (harness pipeline)\nThis story is delivered by a multi-phase harness. Each concern is produced in ITS OWN\nphase \u2014 do not do a later phase's work early:\n- **coding** phase writes ONLY production source under `src/main/**` (controller, service,\n  client). It must NOT write any test file and must NOT touch the OpenAPI spec or the\n  generated module.\n- **unit_testing** phase writes the tests under `src/test/**` (AC6).\n- Coverage (decision #8, AC6) is enforced by an automated gate AFTER tests \u2014 it is not\n  something the coding phase produces.\n\n## Acceptance criteria\n- AC1: `GET /books/by-author/{author}` exists and returns `Mono<ResponseEntity<BookResponse>>`.\n- AC2: Controller delegates to `BookService`; no blocking operations.\n- AC3: Lookup goes through `CatalogClient.fetchBookByAuthor(...)`; no direct downstream HTTP calls.\n- AC4: Reactive patterns followed (returns `Mono`, composes Reactor types); complies with\n  the reactive-controller and reactive-webclient instructions.\n- AC5: Empty catalog result \u2192 404; blank author \u2192 400; author > 256 chars \u2192 400.\n- AC6: Unit test with `StepVerifier` covers the happy path and asserts the response body;\n  changed class has \u2265 90% line coverage. (Produced in the unit_testing phase, not coding.)\n- AC7: Controller implements the existing `BooksApi.getBookByAuthor` interface method\n  (no controller-level mapping annotation). The generated module and OpenAPI spec are\n  NOT modified by this story.\n\n## Constraints\n- Reactive stack: Spring WebFlux / Reactor. No `.block()`, no `.collectList()`.\n- Follow the repo's reactive-controller and reactive-webclient instructions.\n- Constructor injection for any new components.\n- Unit tests: JUnit 5 + Reactor `StepVerifier`; mock `CatalogClient`; no external calls.\n- No DB access \u2014 lookup is via `CatalogClient` only.\n- Do not hand-edit the generated `*-openapi-code` module or any OpenAPI spec.\n\n## Out of scope\n- Editing the OpenAPI spec or the generated `*-openapi-code` module (the `getBookByAuthor`\n  operation is already declared on the `BooksApi` interface).\n- Database schema or direct DB access.\n- Pagination / listing multiple books by author.\n- Auth/authorization changes.\n- Performance or load testing.\n- Resilience policies (timeouts, retries, circuit breakers, rate limiting).",
+  "current_phase": "raise_pr",
+  "status": "done",
+  "completed_phases": [
+    "context",
+    "prompt_steps",
+    "coding",
+    "code_review",
+    "unit_testing",
+    "documentation",
+    "raise_pr"
+  ],
+  "approvals": {
+    "context": "approved",
+    "prompt_steps": "approved",
+    "coding": "approved",
+    "unit_testing": "rejected",
+    "documentation": "approved"
+  },
+  "last_feedback": null,
+  "iterations": {
+    "context": 1,
+    "prompt_steps": 1,
+    "coding": 1,
+    "code_review": 1,
+    "unit_testing": 1,
+    "documentation": 1,
+    "raise_pr": 1
+  },
+  "validation_attempts": 0,
+  "coverage_attempts": 2,
+  "changed_main_files": [
+    "sample-book-service-application/src/main/java/com/example/book/webclient/CatalogClient.java",
+    "sample-book-service-application/src/main/java/com/example/book/webclient/CatalogClientImpl.java",
+    "sample-book-service-application/src/main/java/com/example/book/service/BookService.java",
+    "sample-book-service-application/src/main/java/com/example/book/service/BookServiceImpl.java",
+    "sample-book-service-application/src/main/java/com/example/book/controller/BookController.java"
+  ],
+  "review_attempts": 0,
+  "scope_attempts": 0,
+  "total_tokens": {
+    "input": 1772872,
+    "output": 36304,
+    "cache_read": 1473039,
+    "cache_write": 43352,
+    "reasoning": 17284
+  },
+  "phase_token_log": [
+    {
+      "phase": "context",
+      "model": "gpt-5-mini",
+      "phase_tokens": 157827,
+      "cumulative_tokens": 157827,
+      "input_tokens": 154343,
+      "output_tokens": 3484,
+      "cached_tokens": 115456,
+      "cache_write_tokens": 0,
+      "est_credits": 1.957615,
+      "est_usd": 0.01957615,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "skill",
+        "view",
+        "create"
+      ]
+    },
+    {
+      "phase": "prompt_steps",
+      "model": "gpt-5-mini",
+      "phase_tokens": 107610,
+      "cumulative_tokens": 265437,
+      "input_tokens": 102680,
+      "output_tokens": 4930,
+      "cached_tokens": 46592,
+      "cache_write_tokens": 0,
+      "est_credits": 2.5046799999999996,
+      "est_usd": 0.025046799999999998,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "skill",
+        "create"
+      ]
+    },
+    {
+      "phase": "coding",
+      "model": "gpt-5-mini",
+      "phase_tokens": 1082741,
+      "cumulative_tokens": 1348178,
+      "input_tokens": 1076751,
+      "output_tokens": 5990,
+      "cached_tokens": 990848,
+      "cache_write_tokens": 0,
+      "est_credits": 5.8226949999999995,
+      "est_usd": 0.05822695,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "view",
+        "grep",
+        "edit",
+        "bash"
+      ]
+    },
+    {
+      "phase": "code_review",
+      "model": "claude-haiku-4.5",
+      "phase_tokens": 120393,
+      "cumulative_tokens": 1468571,
+      "input_tokens": 114812,
+      "output_tokens": 5581,
+      "cached_tokens": 71439,
+      "cache_write_tokens": 43352,
+      "est_credits": 7.842189999999999,
+      "est_usd": 0.07842189999999999,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "view",
+        "create"
+      ]
+    },
+    {
+      "phase": "unit_testing",
+      "model": "gpt-5-mini",
+      "phase_tokens": 60783,
+      "cumulative_tokens": 1529354,
+      "input_tokens": 57788,
+      "output_tokens": 2995,
+      "cached_tokens": 27904,
+      "cache_write_tokens": 0,
+      "est_credits": 1.41586,
+      "est_usd": 0.0141586,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "create"
+      ]
+    },
+    {
+      "phase": "unit_testing",
+      "model": "gpt-5-mini",
+      "phase_tokens": 66056,
+      "cumulative_tokens": 1595410,
+      "input_tokens": 61030,
+      "output_tokens": 5026,
+      "cached_tokens": 44800,
+      "cache_write_tokens": 0,
+      "est_credits": 1.52295,
+      "est_usd": 0.0152295,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "create"
+      ]
+    },
+    {
+      "phase": "unit_testing",
+      "model": "gpt-5-mini",
+      "phase_tokens": 128775,
+      "cumulative_tokens": 1724185,
+      "input_tokens": 124124,
+      "output_tokens": 4651,
+      "cached_tokens": 107776,
+      "cache_write_tokens": 0,
+      "est_credits": 1.60834,
+      "est_usd": 0.0160834,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "bash",
+        "create"
+      ]
+    },
+    {
+      "phase": "documentation",
+      "model": "gpt-5-mini",
+      "phase_tokens": 43387,
+      "cumulative_tokens": 1767572,
+      "input_tokens": 41106,
+      "output_tokens": 2281,
+      "cached_tokens": 34176,
+      "cache_write_tokens": 0,
+      "est_credits": 0.7148899999999999,
+      "est_usd": 0.0071489,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "create"
+      ]
+    },
+    {
+      "phase": "raise_pr",
+      "model": "gpt-5-mini",
+      "phase_tokens": 41604,
+      "cumulative_tokens": 1809176,
+      "input_tokens": 40238,
+      "output_tokens": 1366,
+      "cached_tokens": 34048,
+      "cache_write_tokens": 0,
+      "est_credits": 0.51307,
+      "est_usd": 0.0051307,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "create"
+      ]
+    }
+  ]
+}
