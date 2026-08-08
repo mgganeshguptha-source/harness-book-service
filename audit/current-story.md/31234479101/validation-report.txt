@@ -1,0 +1,31 @@
+command: ./mvnw test
+exit_code: 0
+summary: COVERAGE UNREADABLE
+coverage: Could not measure LINE coverage for the changed class(es) ['sample-book-service-application/src/main/java/com/example/book/webclient/CatalogClient.java', 'sample-book-service-application/src/main/java/com/example/book/service/BookService.java', 'sample-book-service-application/src/main/java/com/example/book/service/BookServiceImpl.java', 'sample-book-service-application/src/main/java/com/example/book/webclient/CatalogClientImpl.java', 'sample-book-service-application/src/main/java/com/example/book/model/BookResponse.java', 'sample-book-service-application/src/main/java/com/example/book/controller/BookController.java'] from target/site/jacoco/jacoco.csv. Check that JaCoCo (jacoco-maven-plugin) is configured and that the changed files are main source.
+
+--- tail ---
+[INFO] Running com.example.book.BookServiceImplGetByAuthorTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.example.book.BookServiceImplGetByAuthorTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.12:report (report) @ sample-book-service-application ---
+[INFO] Loading execution data file /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/target/jacoco.exec
+[INFO] Analyzed bundle 'sample-book-service-application' with 7 classes
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for sample-book-service (root) 1.0.0-SNAPSHOT:
+[INFO] 
+[INFO] sample-book-service (root) ......................... SUCCESS [  0.002 s]
+[INFO] sample-book-service-openapi-code (generated) ....... SUCCESS [  0.672 s]
+[INFO] sample-book-service-application .................... SUCCESS [  6.125 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.104 s
+[INFO] Finished at: 2026-08-08T02:22:52Z
+[INFO] ------------------------------------------------------------------------
+
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
