@@ -1,0 +1,30 @@
+command: ./mvnw test -Dtest=OwnerTest
+exit_code: 1
+summary: BUILD FAILURE
+
+--- tail ---
+Downloaded from central: https://repo.maven.apache.org/maven2/com/thoughtworks/qdox/qdox/2.2.0/qdox-2.2.0.jar (353 kB at 6.4 MB/s)
+[INFO] No tests to run.
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for sample-book-service (root) 1.0.0-SNAPSHOT:
+[INFO] 
+[INFO] sample-book-service (root) ......................... SUCCESS [  0.001 s]
+[INFO] sample-book-service-openapi-code (generated) ....... FAILURE [  5.331 s]
+[INFO] sample-book-service-application .................... SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.183 s
+[INFO] Finished at: 2026-08-08T01:57:01Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.3:test (default-test) on project sample-book-service-openapi-code: No tests matching pattern "OwnerTest" were executed! (Set -Dsurefire.failIfNoSpecifiedTests=false to ignore this error.) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] hxxp://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :sample-book-service-openapi-code
+
