@@ -5,4 +5,6 @@ import reactor.core.publisher.Mono;
 
 public interface BookService {
     Mono<BookResponse> getBook(String bookId);
+
+    Mono<BookResponse> getBookByAuthor(String author);
 }
