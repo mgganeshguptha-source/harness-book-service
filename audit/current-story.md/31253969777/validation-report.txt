@@ -1,0 +1,30 @@
+command: ./mvnw test
+exit_code: 1
+summary: BUILD FAILURE
+
+--- tail ---
+[ERROR]     method org.mockito.stubbing.OngoingStubbing.thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#12 of ?>,org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#12 of ?>...) is not applicable
+[ERROR]       (argument mismatch; org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#11 of ?> cannot be converted to org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#12 of ?>)
+[ERROR] /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/src/test/java/com/example/book/CatalogClientImplUnitTest.java:[111,30] no suitable method found for thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec<capture#13 of ?>)
+[ERROR]     method org.mockito.stubbing.OngoingStubbing.thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec<capture#14 of ?>) is not applicable
+[ERROR]       (argument mismatch; org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec<capture#13 of ?> cannot be converted to org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec<capture#14 of ?>)
+[ERROR]     method org.mockito.stubbing.OngoingStubbing.thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec<capture#14 of ?>,org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec<capture#14 of ?>...) is not applicable
+[ERROR]       (argument mismatch; org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec<capture#13 of ?> cannot be converted to org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec<capture#14 of ?>)
+[ERROR] /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/src/test/java/com/example/book/CatalogClientImplUnitTest.java:[112,21] reference to uri is ambiguous
+[ERROR]   both method uri(java.lang.String,java.util.Map<java.lang.String,?>) in org.springframework.web.reactive.function.client.WebClient.UriSpec and method uri(java.lang.String,java.util.function.Function<org.springframework.web.util.UriBuilder,java.net.URI>) in org.springframework.web.reactive.function.client.WebClient.UriSpec match
+[ERROR] /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/src/test/java/com/example/book/CatalogClientImplUnitTest.java:[112,46] no suitable method found for thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#15 of ?>)
+[ERROR]     method org.mockito.stubbing.OngoingStubbing.thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#16 of ?>) is not applicable
+[ERROR]       (argument mismatch; org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#15 of ?> cannot be converted to org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#16 of ?>)
+[ERROR]     method org.mockito.stubbing.OngoingStubbing.thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#16 of ?>,org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#16 of ?>...) is not applicable
+[ERROR]       (argument mismatch; org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#15 of ?> cannot be converted to org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#16 of ?>)
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] hxxp://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :sample-book-service-application
+
