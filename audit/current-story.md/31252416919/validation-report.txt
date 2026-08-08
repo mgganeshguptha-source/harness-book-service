@@ -1,0 +1,30 @@
+command: ./mvnw test
+exit_code: 1
+summary: BUILD FAILURE
+
+--- tail ---
+[INFO] sample-book-service (root) ......................... SUCCESS [  0.002 s]
+[INFO] sample-book-service-openapi-code (generated) ....... SUCCESS [  0.659 s]
+[INFO] sample-book-service-application .................... FAILURE [  1.394 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.352 s
+[INFO] Finished at: 2026-08-08T10:31:23Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project sample-book-service-application: Compilation failure: Compilation failure: 
+[ERROR] /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/src/main/java/com/example/book/webclient/CatalogClientImpl.java:[35,69] type argument org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<?> is not within bounds of type-variable S
+[ERROR] /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/src/main/java/com/example/book/webclient/CatalogClientImpl.java:[36,78] type argument org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<?> is not within bounds of type-variable S
+[ERROR] /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/src/main/java/com/example/book/webclient/CatalogClientImpl.java:[46,69] type argument org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<?> is not within bounds of type-variable S
+[ERROR] /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/src/main/java/com/example/book/webclient/CatalogClientImpl.java:[47,78] type argument org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<?> is not within bounds of type-variable S
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] hxxp://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :sample-book-service-application
+
