@@ -1,0 +1,30 @@
+command: ./mvnw test
+exit_code: 1
+summary: BUILD FAILURE
+
+--- tail ---
+[INFO] sample-book-service (root) ......................... SUCCESS [  0.002 s]
+[INFO] sample-book-service-openapi-code (generated) ....... SUCCESS [  0.512 s]
+[INFO] sample-book-service-application .................... FAILURE [  5.491 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.223 s
+[INFO] Finished at: 2026-08-08T12:45:19Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.3:test (default-test) on project sample-book-service-application: 
+[ERROR] 
+[ERROR] See /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] hxxp://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :sample-book-service-application
+
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
