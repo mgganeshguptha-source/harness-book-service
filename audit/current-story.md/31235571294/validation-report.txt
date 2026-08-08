@@ -1,0 +1,30 @@
+command: ./mvnw test
+exit_code: 1
+summary: BUILD FAILURE
+
+--- tail ---
+[ERROR] /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/src/test/java/com/example/book/CatalogClientImplTest.java:[85,71] no suitable method found for thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#11 of ?>)
+[ERROR]     method org.mockito.stubbing.OngoingStubbing.thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#12 of ?>) is not applicable
+[ERROR]       (argument mismatch; org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#11 of ?> cannot be converted to org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#12 of ?>)
+[ERROR]     method org.mockito.stubbing.OngoingStubbing.thenReturn(org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#12 of ?>,org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#12 of ?>...) is not applicable
+[ERROR]       (argument mismatch; org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#11 of ?> cannot be converted to org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec<capture#12 of ?>)
+[ERROR] /home/runner/work/harness-book-service/harness-book-service/service/sample-book-service-application/src/test/java/com/example/book/CatalogClientImplTest.java:[92,51] no suitable method found for thenReturn(reactor.core.publisher.Mono<java.lang.RuntimeException>)
+[ERROR]     method org.mockito.stubbing.OngoingStubbing.thenReturn(reactor.core.publisher.Mono<org.springframework.web.reactive.function.client.WebClientResponseException>) is not applicable
+[ERROR]       (argument mismatch; inference variable T has incompatible bounds
+[ERROR]           equality constraints: org.springframework.web.reactive.function.client.WebClientResponseException
+[ERROR]           lower bounds: java.lang.RuntimeException)
+[ERROR]     method org.mockito.stubbing.OngoingStubbing.thenReturn(reactor.core.publisher.Mono<org.springframework.web.reactive.function.client.WebClientResponseException>,reactor.core.publisher.Mono<org.springframework.web.reactive.function.client.WebClientResponseException>...) is not applicable
+[ERROR]       (argument mismatch; inference variable T has incompatible bounds
+[ERROR]           equality constraints: org.springframework.web.reactive.function.client.WebClientResponseException
+[ERROR]           lower bounds: java.lang.RuntimeException)
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] hxxp://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :sample-book-service-application
+
