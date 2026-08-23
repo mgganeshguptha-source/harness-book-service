@@ -1,8 +1,26 @@
 # =============================================================================
-# .github/workflows/harness.yml   —  CALLER workflow (service repo)
-# Goes in each SERVICE repo (sample-book-service, harness-book-service, etc.).
-# Thin by design: it only invokes the reusable engine. All the real logic lives
-# in harness-engine; skills/instructions are pulled from copilot-toolkit at run.
+# <service-repo>/.github/workflows/harness.yml
+# THE CALLER — thin by design. All logic lives in the reusable engine workflow.
+#
+# Run it from Actions -> Harness -> Run workflow.
+#
+# RESUME
+# When a run halts (a gate stopped it and a human is needed), the harness pushes
+# everything it produced to `harness-wip/<feature_id>` — the source it wrote, the
+# artifacts, and its run state. To continue:
+#
+#   1. git fetch && git checkout harness-wip/<feature_id>
+#   2. fix the code, commit, push
+#   3. re-run this workflow with the SAME feature_id and resume = true
+#
+# The phases that already passed are not re-run. That matters for cost as much as
+# time: context and prompt_steps are the two most expensive phases in a run and
+# the least likely to need redoing after a code-level fix.
+#
+# When to resume, and when not to:
+#   resume  — the defect is in the code (review found a bug, a test failed)
+#   restart — the defect is upstream, in the context or the plan. Resuming keeps
+#             the bad plan and you will fail again further down.
 # =============================================================================
 name: Harness
 
@@ -10,8 +28,30 @@ on:
   workflow_dispatch:
     inputs:
       feature_id:
-        description: "Story / feature id to run"
+        description: "Story / feature id (e.g. BOOK-1)"
         required: true
+        type: string
+      resume:
+        description: "Continue a halted run from harness-wip/<feature_id> instead of starting over"
+        required: false
+        default: false
+        type: boolean
+      start_phase:
+        description: "Resume only — phase to re-enter at. Blank = where it halted."
+        required: false
+        default: ""
+        type: choice
+        options:
+          - ""
+          - context
+          - design
+          - prompt_steps
+          - coding
+          - code_review
+          - unit_testing
+          - validation
+          - documentation
+          - raise_pr
 
 jobs:
   harness:
@@ -21,5 +61,8 @@ jobs:
       java-version: "17"
       python-version: "3.13"
       node-version: "20"
+      resume: ${{ inputs.resume }}
+      start_phase: ${{ inputs.start_phase }}
       # engine_ref defaults to v1; toolkit_ref defaults to main — no need to set.
-    secrets: inherit
+    secrets:
+      COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
