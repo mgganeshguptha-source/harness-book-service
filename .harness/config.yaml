@@ -1,28 +1,48 @@
 # Per-repo harness config. Module paths auto-detect from pom.xml (no name hardcoded).
 target_module: ""                       # blank => auto-detect the -application module
 
+# ---------------------------------------------------------------- build
 test_command: "./mvnw test"             # unit tests only (team DoD)
-min_coverage: 0.90                       # 90% line coverage on the changed class
+test_filter: ""                         # blank => run the whole suite
+pre_validation_command: ""              # sample pom has no spring-javaformat plugin;
+                                        # set the goal here once it does
+
+# ---------------------------------------------------------------- coverage gate
+min_coverage: 0.90                      # 90% line coverage on the CHANGED class
 coverage_scope: "changed"
 coverage_metric: "LINE"
-coverage_csv: "target/site/jacoco/jacoco.csv"
+coverage_csv: "target/site/jacoco/jacoco.csv"   # resolved module-aware at run time
 coverage_command: "./mvnw jacoco:report"
 coverage_loopback_phase: "unit_testing"
 max_coverage_retries: 2
 
-write_exclude:                           # deny-wins; the -openapi-code module is
-  - "**/generated/**"                    # auto-excluded too
+# ---------------------------------------------------------------- write boundary
+write_exclude:                          # deny-wins; the -openapi-code module is
+  - "**/generated/**"                   # auto-excluded too
   - "**/*MapperImpl.java"
 
-repo_stacks: ["backend"]
+repo_stacks: ["backend"]                # filters instruction files AND skills
 
-model: "gpt-5-mini"
+# ---------------------------------------------------------------- model routing
+model: "gpt-5-mini"                     # default for every phase
 phase_models:
-  design: "claude-sonnet-4.5"
-  validation: "claude-sonnet-4.5"
-  unit_testing: "gpt-5.1-mini"
-review_model: "claude-haiku-4.5"
+  design: "claude-sonnet-4.5"           # architecture decisions and trade-offs
+  validation: "claude-sonnet-4.5"       # judging each acceptance criterion
+  # unit_testing: "gpt-5.1-mini"        # re-enable once the model string is verified
+review_model: "claude-haiku-4.5"        # code_review only — set HERE, not in phase_models
 review_loopback_phase: "coding"
 max_review_retries: 2
-test_filter: ""                                    # already added — ensure it's pushed
-pre_validation_command: "./mvnw spring-javaformat:apply"   # kill the mvnw.cmd 127
+
+# ---------------------------------------------------------------- context gate
+# Clarifications ALWAYS block, in every mode. This controls only the feasibility half.
+blocker_gate: advisory                  # advisory for early runs; switch to blocking
+
+# ---------------------------------------------------------------- AC conformance gate
+ac_gate: advisory                       # advisory for early runs; switch to blocking
+ac_loopback_phase: "coding"
+max_ac_retries: 2
+halt_on_inconclusive: false             # early UNVERIFIABLE = test-fixture gaps
+
+# ---------------------------------------------------------------- termination
+max_phase_runs: 3                              # global cap across all loop types
+test_failure_loopback_phase: "unit_testing"    # test-compile failures go here, not coding
