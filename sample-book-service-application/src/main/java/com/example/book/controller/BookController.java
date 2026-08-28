@@ -6,6 +6,7 @@ import com.example.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
@@ -28,5 +29,19 @@ public class BookController implements BooksApi {
         log.info("Request received getBookById bookId:{}", bookId);
         return bookService.getBook(bookId)
                 .map(ResponseEntity::ok);
+    }
+
+    @Override
+    public Mono<ResponseEntity<BookResponse>> getBookByAuthor(String author) {
+        log.info("Request received getBookByAuthor author:{}", author);
+
+        if (!StringUtils.hasText(author) || author.length() > 256) {
+            log.warn("Invalid author parameter, blank or too long (len={}):{}", author == null ? 0 : author.length(), author);
+            return Mono.just(ResponseEntity.badRequest().build());
+        }
+
+        return bookService.getBookByAuthor(author)
+                .map(ResponseEntity::ok)
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 }

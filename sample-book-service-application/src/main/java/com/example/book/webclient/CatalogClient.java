@@ -10,4 +10,6 @@ import reactor.core.publisher.Mono;
  */
 public interface CatalogClient {
     Mono<CatalogBookDto> fetchBook(String bookId);
+
+    Mono<CatalogBookDto> fetchBookByAuthor(String author);
 }
