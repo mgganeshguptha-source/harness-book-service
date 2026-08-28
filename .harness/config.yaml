@@ -17,7 +17,10 @@ write_exclude:                           # deny-wins; the -openapi-code module i
 repo_stacks: ["backend"]
 
 model: "gpt-5-mini"
-phase_models: {}
+phase_models:
+  design: "claude-sonnet-4.5"
+  validation: "claude-sonnet-4.5"
+  unit_testing: "gpt-5.1-mini"
 review_model: "claude-haiku-4.5"
 review_loopback_phase: "coding"
 max_review_retries: 2
