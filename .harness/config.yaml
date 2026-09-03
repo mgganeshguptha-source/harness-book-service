@@ -26,10 +26,10 @@ repo_stacks: ["backend"]                # filters instruction files AND skills
 # ---------------------------------------------------------------- model routing
 model: "gpt-5-mini"                     # default for every phase
 phase_models:
-  design: "claude-sonnet-4.5"           # architecture decisions and trade-offs
-  validation: "claude-sonnet-4.5"       # judging each acceptance criterion
-  # unit_testing: "gpt-5.1-mini"        # re-enable once the model string is verified
-review_model: "claude-haiku-4.5"        # code_review only — set HERE, not in phase_models
+  design: "gpt-5-mini"           # architecture decisions and trade-offs
+  validation: "gpt-5-mini"       # judging each acceptance criterion
+  # unit_testing: "gpt-5-mini"        # re-enable once the model string is verified
+review_model: "gpt-5-mini"        # code_review only — set HERE, not in phase_models
 review_loopback_phase: "coding"
 max_review_retries: 2
 
