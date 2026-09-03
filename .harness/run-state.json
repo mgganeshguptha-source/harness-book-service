@@ -1,29 +1,46 @@
 {
   "feature_id": "BOOK-1",
   "story": "# Story BOOK-2: Cache catalog book lookups\n\n## Goal\nReduce load on the catalog service by caching book lookups in the book service.\nCatalog data changes rarely, and the same books are requested repeatedly, so most\ncalls to `CatalogClient` return a value the service has already seen.\n\nThe service has no caching today \u2014 no cache abstraction, no cache dependency, and\nno eviction policy anywhere in the codebase.\n\n## Expected behaviour\n- Lookups through `CatalogClient` are served from a cache when a fresh entry exists.\n- A cache miss falls through to the catalog service and populates the cache.\n- Entries expire so stale catalog data is not served indefinitely.\n- Everything stays reactive \u2014 no blocking call is introduced by the cache.\n\n## Explicit behaviour decisions (resolving prior clarifications)\n1. **What is cached:** the result of `CatalogClient.fetchBook(String bookId)`.\n   Author lookups are out of scope for this story.\n2. **Key:** the `bookId` exactly as passed to the client. No normalisation.\n3. **Expiry:** entries expire 10 minutes after they are written. Time-based only \u2014\n   no invalidation on write, because this service does not write to the catalog.\n4. **Capacity:** the cache holds at most 1000 entries. When full, evict least\n   recently used.\n5. **Cache miss behaviour:** call the catalog service exactly as today and store\n   the result. A miss must never fail the request.\n6. **Empty results:** when the catalog returns empty (no such book), do NOT cache\n   the empty result. A book added later must be visible without waiting for expiry.\n7. **Downstream errors:** when the catalog call fails, do NOT cache anything and\n   let the error propagate as it does today. No fallback to a stale entry.\n8. **Scope of the change:** the cache sits between `BookService` and\n   `CatalogClient`. Controllers are unchanged and must not know a cache exists.\n9. **Metrics/monitoring:** out of scope for this story.\n10. **Distributed caching:** out of scope. A single-instance in-memory cache is\n    sufficient; a shared cache across instances is a separate story.\n11. **Ownership:** N/A \u2014 demo story, no named owner or reviewer required.\n\n## Acceptance criteria\n- AC1: A second lookup for the same `bookId` within the expiry window does not\n  call the catalog service.\n- AC2: A lookup for a `bookId` not in the cache calls the catalog service and\n  stores the result.\n- AC3: A lookup for a `bookId` whose entry is older than 10 minutes calls the\n  catalog service again.\n- AC4: When the catalog returns empty, nothing is cached, and a later lookup for\n  the same `bookId` calls the catalog service again.\n- AC5: When the catalog call fails, nothing is cached and the error propagates\n  unchanged.\n- AC6: No blocking call is introduced \u2014 no `.block()`, no `.collectList()`.\n- AC7: The controller layer is unchanged by this story.\n- AC8: Unit tests with `StepVerifier` cover hit, miss, expiry, empty and error\n  paths; changed classes reach at least 90% line coverage.\n\n## Constraints\n- Reactive stack: Spring WebFlux / Reactor. The cache must not block.\n- Constructor injection for any new component.\n- Unit tests: JUnit 5 + Reactor `StepVerifier`; mock `CatalogClient`; no external calls.\n- Do not hand-edit the generated `*-openapi-code` module or any OpenAPI spec.\n- Tests are produced in the unit_testing phase, not during coding.\n\n## Out of scope\n- Caching author lookups.\n- Distributed or shared caching across service instances.\n- Cache metrics, monitoring or admin endpoints.\n- Any change to the catalog service itself.\n- Editing the OpenAPI spec or the generated module.\n- Resilience policies (timeouts, retries, circuit breakers).",
-  "current_phase": "design",
+  "current_phase": "code_review",
   "status": "halted",
   "completed_phases": [
-    "context"
+    "context",
+    "design",
+    "prompt_steps",
+    "coding"
   ],
   "approvals": {
-    "context": "approved"
+    "context": "approved",
+    "design": "approved",
+    "prompt_steps": "approved",
+    "coding": "approved"
   },
   "last_feedback": null,
   "iterations": {
     "__runs__:context": 1,
     "context": 1,
     "__runs__:design": 1,
-    "design": 1
+    "design": 1,
+    "__runs__:prompt_steps": 1,
+    "prompt_steps": 1,
+    "__runs__:coding": 1,
+    "coding": 1,
+    "__runs__:code_review": 1,
+    "code_review": 1
   },
   "validation_attempts": 0,
   "coverage_attempts": 0,
-  "changed_main_files": [],
-  "halt_gate": "sdk_error",
+  "changed_main_files": [
+    "sample-book-service-application/src/main/java/com/example/book/webclient/CachingCatalogClient.java"
+  ],
+  "halt_gate": "artifact_missing",
   "halt_detail": null,
   "phase_durations": {
     "context": 39.4,
-    "design": 11.0
+    "design": 119.7,
+    "prompt_steps": 113.6,
+    "coding": 64.2,
+    "code_review": 31.4
   },
   "started_at": "2026-09-03T08:19:23Z",
   "actor": "mgganeshguptha-source",
@@ -34,11 +51,11 @@
   "review_attempts": 0,
   "scope_attempts": 0,
   "total_tokens": {
-    "input": 138005,
-    "output": 3133,
-    "cache_read": 91136,
+    "input": 1118147,
+    "output": 22477,
+    "cache_read": 894080,
     "cache_write": 0,
-    "reasoning": 1152
+    "reasoning": 8896
   },
   "phase_token_log": [
     {
@@ -61,6 +78,92 @@
         "skill",
         "create"
       ]
+    },
+    {
+      "phase": "design",
+      "model": "gpt-5-mini",
+      "phase_tokens": 262286,
+      "cumulative_tokens": 403424,
+      "input_tokens": 256406,
+      "output_tokens": 5880,
+      "cached_tokens": 199168,
+      "cache_write_tokens": 0,
+      "est_credits": 3.10487,
+      "est_usd": 0.031048700000000002,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "skill",
+        "grep",
+        "view",
+        "create"
+      ]
+    },
+    {
+      "phase": "prompt_steps",
+      "model": "gpt-5-mini",
+      "phase_tokens": 320717,
+      "cumulative_tokens": 724141,
+      "input_tokens": 312827,
+      "output_tokens": 7890,
+      "cached_tokens": 239488,
+      "cache_write_tokens": 0,
+      "est_credits": 4.0101949999999995,
+      "est_usd": 0.04010195,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "skill",
+        "view",
+        "grep",
+        "create"
+      ]
+    },
+    {
+      "phase": "coding",
+      "model": "gpt-5-mini",
+      "phase_tokens": 386833,
+      "cumulative_tokens": 1110974,
+      "input_tokens": 383647,
+      "output_tokens": 3186,
+      "cached_tokens": 350336,
+      "cache_write_tokens": 0,
+      "est_credits": 2.345815,
+      "est_usd": 0.02345815,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "view",
+        "grep",
+        "create"
+      ]
+    },
+    {
+      "phase": "code_review",
+      "model": "gpt-5-mini",
+      "phase_tokens": 29650,
+      "cumulative_tokens": 1140624,
+      "input_tokens": 27262,
+      "output_tokens": 2388,
+      "cached_tokens": 13952,
+      "cache_write_tokens": 0,
+      "est_credits": 0.8452299999999999,
+      "est_usd": 0.0084523,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": []
     }
   ]
 }
