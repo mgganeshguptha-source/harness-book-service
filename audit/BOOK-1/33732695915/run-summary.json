@@ -1,0 +1,45 @@
+{
+  "feature": "BOOK-1",
+  "run_id": "33732695915",
+  "status": "halted",
+  "completed_phases": [
+    "context"
+  ],
+  "total_tokens": {
+    "input": 138005,
+    "output": 3133,
+    "cache_read": 91136,
+    "cache_write": 0,
+    "reasoning": 1152
+  },
+  "phase_token_log": [
+    {
+      "phase": "context",
+      "model": "gpt-5-mini",
+      "phase_tokens": 141138,
+      "cumulative_tokens": 141138,
+      "input_tokens": 138005,
+      "output_tokens": 3133,
+      "cached_tokens": 91136,
+      "cache_write_tokens": 0,
+      "est_credits": 2.026165,
+      "est_usd": 0.020261650000000003,
+      "included": false,
+      "partial": false,
+      "skills_loaded": [
+        "customize-cloud-agent"
+      ],
+      "tools_invoked": [
+        "skill",
+        "create"
+      ]
+    }
+  ],
+  "cost_source": {
+    "is_estimate": false,
+    "basis": "GitHub billing API \u2014 consumed AI credits (grossQuantity), read once before and once after the run. 1 credit = $0.01.",
+    "endpoint": "GET /users/{username}/settings/billing/ai_credit/usage",
+    "caveat": "The delta is account-wide: it is accurate only while this account makes no other Copilot requests during the run.",
+    "unavailable_when": "Copilot licence billed via an org/enterprise (user-level endpoint returns no usage), or the token lacks 'Plan' user permission (read)."
+  }
+}
