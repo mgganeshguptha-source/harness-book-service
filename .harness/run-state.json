@@ -23,7 +23,7 @@
   "halt_detail": null,
   "phase_durations": {
     "context": 39.4,
-    "design": 3.5
+    "design": 11.0
   },
   "started_at": "2026-09-03T08:19:23Z",
   "actor": "mgganeshguptha-source",
